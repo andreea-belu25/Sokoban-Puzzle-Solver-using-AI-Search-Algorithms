@@ -1,7 +1,4 @@
 # Sokoban Puzzle Solver using IDA* and Simulated Annealing
-
-**Author:** Belu Andreea-Daniela
-
 ---
 
 ## Executive Summary
@@ -167,15 +164,15 @@ The final behavior successfully avoids prolonged stagnation through reinitializa
 **Performance Analysis:**
 
 **IDA* Behavior:**
-- ✓ Efficient solution finding for simple maps
-- ✗ Confusion on complex maps with multiple boxes regarding optimal placement order
-- ✗ Significantly increased explored states and execution time on difficult maps
+- Efficient solution finding for simple maps
+- Confusion on complex maps with multiple boxes regarding optimal placement order
+- Significantly increased explored states and execution time on difficult maps
 - **Cause**: Heuristic ignores potential deadlocks
 
 **Simulated Annealing Behavior:**
 - More efficient than IDA* on complex maps due to local minima escape through reinitialization
-- ✗ Cannot solve all map types
-- ✓ Reduced pull moves (IDA* explores extensively, requiring fewer pulls)
+- Cannot solve all map types
+- Reduced pull moves (IDA* explores extensively, requiring fewer pulls)
 
 ### 3.4 Deadlock-Aware Manhattan Heuristic
 
