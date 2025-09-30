@@ -174,7 +174,7 @@ The final behavior successfully avoids prolonged stagnation through reinitializa
 - Cannot solve all map types
 - Reduced pull moves (IDA* explores extensively, requiring fewer pulls)
 
-### 3.4 Deadlock-Aware Manhattan Heuristic
+### 3.4 Deadlock Manhattan Heuristic
 
 **Enhancement**: Integrated corner and box-wall blockage detection.
 
@@ -204,14 +204,14 @@ Both algorithms benefit from deadlock integration, with more visible improvement
 **IDA* Behavior:**
 - Fewer explored states on large tests compared to Manhattan
 - Improved results on small and medium tests
-- ✗ Still ignores box interactions
+- Still ignores box interactions
 
 **Simulated Annealing Behavior:**
 - Broader state space exploration with 50% probability of returning to known efficient states
 - Progress on difficult tests
 - Generally fewer pull moves than Manhattan (due to optimistic nature)
 
-### 3.6 Deadlock-Aware Euclidean Heuristic
+### 3.6 Deadlock Euclidean Heuristic
 
 **Enhancement**: Integrated deadlock detection functions.
 
@@ -246,7 +246,7 @@ Both algorithms benefit from deadlock integration, with more visible improvement
 - Considerably fewer explored states
 - Improved execution time for most maps
 
-### 3.8 Deadlock-Aware Hungarian Heuristic
+### 3.8 Deadlock Hungarian Heuristic
 
 **Enhancement**: Combined with deadlock detection (implemented out of curiosity for potential additional benefits).
 
@@ -261,7 +261,7 @@ Both algorithms benefit from deadlock integration, with more visible improvement
 Both algorithms benefit significantly:
 - **Simulated Annealing**: Easier solution finding in complex spaces with fewer reinitializations
 - Both show progress in detecting and abandoning impossible paths
-- ✗ Number of explored states remains high
+- Number of explored states remains high
 
 **Pull Moves Analysis:**
 - Combination of optimal assignment and deadlock path elimination enables finding much more efficient solutions from pull move perspective
@@ -271,7 +271,7 @@ Both algorithms benefit significantly:
 
 ---
 
-### 3.9 Efficient Heuristic (Mobility-Aware)
+### 3.9 Efficient Heuristic
 
 **Concept**: Add penalties for boxes blocked by other boxes and/or walls.
 
@@ -284,7 +284,7 @@ Both algorithms benefit significantly:
 **Function:** `efficient_heuristic(state)`
 
 **IDA* Influence:**
-- Boxes becoming difficult to maneuver are avoided when possible
+- Boxes becoming difficult to move are avoided when possible
 - Boxes maintaining mobility for other boxes are preferred
 
 **Performance Analysis:**
@@ -303,7 +303,7 @@ Both algorithms benefit significantly:
 
 **Results:** This heuristic achieved significant progress for both algorithms.
 
-### 3.10 Deadlock-Aware Efficient Heuristic
+### 3.10 Deadlock Efficient Heuristic
 
 **Enhancement**: Combined efficient heuristic with deadlock detection.
 
@@ -448,71 +448,6 @@ Both algorithms benefit significantly:
 While this achieves maximum efficiency, **`efficient_heuristic` is considered highest quality** due to better pull move minimization for Simulated Annealing.
 
 ---
-
-## Conclusions
-
-### Algorithm Strengths
-
-**IDA*:**
-- Systematic exhaustive search with memory efficiency
-- Benefits significantly from informed heuristics
-- Deadlock detection eliminates vast portions of useless search space
-- Best with efficient_heuristic for balanced performance
-
-**Simulated Annealing:**
-- Escapes local optima through reinitialization and probabilistic acceptance
-- Adaptive temperature scheduling prevents premature convergence
-- Softmax-guided state selection (50/50 exploitation/exploration) crucial for large maps
-- More robust on complex maps but requires careful tuning
-
-### Heuristic Evolution
-
-The progression from basic distance metrics to mobility-aware heuristics demonstrates:
-
-1. **Distance Metrics** (Manhattan, Euclidean): Foundation but insufficient alone
-2. **Optimal Assignment** (Hungarian): Major improvement through proper box-target pairing
-3. **Deadlock Detection**: Critical for pruning impossible states early
-4. **Mobility Awareness** (Efficient): Considers future maneuverability, not just current distances
-
-### Final Recommendations
-
-**For IDA*:** `efficient_heuristic` or `deadlock_efficient_heuristic`
-- Balances exploration reduction with solution quality
-- Minimizes pull moves effectively
-
-**For Simulated Annealing:** `efficient_heuristic`
-- Best pull move quality
-- Robust across map types with proper parameter tuning
-
-Both algorithms successfully solve all provided test maps with appropriate heuristic selection, demonstrating the critical importance of domain-specific heuristic design in AI problem-solving.
-
----
-
-## Technical Implementation Notes
-
-### Key Data Structures
-- State representation with box and player positions
-- Visited state dictionary for cycle detection
-- Path tracking for solution reconstruction
-
-### Performance Metrics
-- Runtime (seconds)
-- Explored states count
-- Pull moves (solution quality indicator)
-
-### Algorithm Parameters
-
-**IDA*:**
-- Maximum iterations (adjusted based on problem complexity)
-- Threshold initialization and update strategy
-
-**Simulated Annealing:**
-- Initial temperature: High (broad exploration)
-- Cooling rate: Very slow (gradual convergence)
-- Final temperature: Very low (exploitation)
-- Maximum consecutive poor moves before reinitialization
-- Softmax temperature parameter for state selection
-
 ---
 
 *This document represents an exploration of informed search algorithms applied to the Sokoban puzzle domain, demonstrating the iterative development of increasingly sophisticated heuristics and the comparative strengths of systematic search (IDA*) versus stochastic optimization (Simulated Annealing).*
