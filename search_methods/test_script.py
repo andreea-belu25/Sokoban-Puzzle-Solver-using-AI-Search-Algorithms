@@ -30,13 +30,6 @@ def solve_map(yaml_path, algorithm = SimulatedAnnealing, heuristic = efficient_h
     total_steps = len(solution_moves)
     print(f"Solution length: {total_steps} steps")
     
-    # count pull moves
-    # pull_moves = 0
-    # for move in solution_moves:
-    #     if move >= BOX_LEFT:
-    #         pull_moves += 1
-
-   # print(f"Pull moves in solution: {pull_moves}")
     print(f"States explored: {solver.explored_states}")
 
 
